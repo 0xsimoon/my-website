@@ -3,15 +3,904 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lunari Projects</title>
+  <title>Simone Lunari — Talent Catalyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; max-width: 700px; margin: 60px auto; padding: 0 20px; }
-    h1 { font-size: 2.5rem; }
-    p { color: #555; line-height: 1.7; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #0f0f18;
+      --bg3: #13131f;
+      --card: #111118;
+      --border: rgba(255,255,255,0.07);
+      --border-bright: rgba(255,255,255,0.14);
+      --accent: #e8613a;
+      --accent2: #c94f2a;
+      --accent-glow: rgba(232,97,58,0.25);
+      --accent-glow2: rgba(232,97,58,0.08);
+      --text: #ffffff;
+      --text2: rgba(255,255,255,0.55);
+      --text3: rgba(255,255,255,0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3.5rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: white !important;
+      padding: 0.55rem 1.25rem !important;
+      border-radius: 4px;
+      font-weight: 500 !important;
+    }
+
+    .nav-cta:hover { background: var(--accent2) !important; box-shadow: 0 0 20px var(--accent-glow) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 3rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 600px; height: 600px;
+      top: -150px; left: -150px;
+      background: radial-gradient(circle, rgba(155,109,255,0.15) 0%, transparent 70%);
+    }
+
+    .orb-2 {
+      width: 500px; height: 500px;
+      bottom: -100px; right: -100px;
+      background: radial-gradient(circle, rgba(232,97,58,0.18) 0%, transparent 70%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232,97,58,0.1);
+      border: 1px solid rgba(232,97,58,0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title .line1 { color: var(--text); display: block; }
+
+    .hero-title .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.22);
+      font-style: italic;
+    }
+
+    .hero-title .accent-word {
+      color: var(--accent);
+      -webkit-text-stroke: 0;
+      text-shadow: 0 0 60px var(--accent-glow);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text2);
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--accent);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--accent2); box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--text2);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      padding: 0.9rem 1.5rem;
+      border: 1px solid var(--border-bright);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+
+    /* STATS */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      padding: 2.5rem 3rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-num span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 6rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-desc {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .pill {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text2);
+      background: var(--bg3);
+      border: 1px solid var(--border-bright);
+      padding: 0.4rem 0.9rem;
+      border-radius: 3px;
+    }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .exp-card {
+      background: var(--card);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .exp-card:hover { background: var(--bg3); }
+
+    .exp-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--accent-glow2);
+      border: 1px solid rgba(232,97,58,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .exp-card h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-card p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    /* PROJECTS */
+    .projects { padding: 6rem 3.5rem; border-bottom: 1px solid var(--border); }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .project-card {
+      background: var(--card);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover { background: var(--bg3); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      line-height: 1;
+    }
+
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232,97,58,0.1);
+      border: 1px solid rgba(232,97,58,0.2);
+      padding: 0.28rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .status-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 4px var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    .project-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .project-card p {
+      font-size: 0.83rem;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; }
+
+    .tag {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text3);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 0.22rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 0.85rem; }
+
+    /* HOW */
+    .how {
+      padding: 6rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 4rem;
+      text-align: left;
+    }
+
+    .step {
+      background: var(--card);
+      padding: 2.5rem 2rem;
+    }
+
+    .step-num {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .step h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .step p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.75;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 6rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-bright);
+      padding-bottom: 0.5rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-email:hover { color: var(--accent); border-color: var(--accent); }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+    }
+
+    .form-field { margin-bottom: 1.25rem; }
+
+    .form-field label {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      outline: none;
+      border-radius: 3px;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--text3); }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: rgba(232,97,58,0.5); }
+
+    .form-field select option { background: var(--bg2); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .form-submit:hover { background: var(--accent2); box-shadow: 0 0 25px var(--accent-glow); }
+
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--text3);
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .stats-strip { grid-template-columns: 1fr 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .about { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      .projects { padding: 4rem 1.5rem; }
+      .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .how { padding: 4rem 1.5rem; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .contact { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
+    }
   </style>
 </head>
 <body>
-  <h1>Welcome to Lunari Projects 🌙</h1>
-  <p>Something exciting is coming soon.</p>
+
+<nav>
+  <a href="#" class="nav-logo"><span class="nav-dot"></span>Simone Lunari</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#how">Process</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Talent Catalyst · Vancouver, BC
+  </div>
+
+  <h1 class="hero-title">
+    <span class="line1">Connecting</span>
+    <span class="line2"><span class="accent-word">People</span> with Purpose</span>
+  </h1>
+
+  <p class="hero-sub">
+    I identify exceptional individuals and match them with projects where their skills create real impact. Talent scouting, project management, and intercultural leadership — all under one vision.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">Explore Projects →</a>
+    <a href="#about" class="btn-ghost">Learn More</a>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">12<span>+</span></div>
+    <div class="stat-label">Years experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Core disciplines</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3<span>+</span></div>
+    <div class="stat-label">Active projects</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Potential matches</div>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="fade-up">
+    <div class="section-eyebrow">About</div>
+    <h2>The right person,<br>the right project</h2>
+    <p class="about-desc">I work at the intersection of people, projects, and opportunity. With a cross-disciplinary background spanning talent acquisition, project management, investing, and intercultural leadership, I bring a rare perspective to every collaboration.</p>
+    <p class="about-desc">Based in Vancouver, I work across borders and industries — identifying where unique skills can create outsized value, and building the connections that make it happen.</p>
+    <div class="pills">
+      <span class="pill">Talent Scouting</span>
+      <span class="pill">Project Management</span>
+      <span class="pill">Investing & Trading</span>
+      <span class="pill">Intercultural Leadership</span>
+      <span class="pill">Immigration & Mobility</span>
+    </div>
+  </div>
+
+  <div class="expertise-grid fade-up">
+    <div class="exp-card">
+      <div class="exp-icon">🎯</div>
+      <h4>Talent Scouting</h4>
+      <p>Identifying high-potential individuals before the market does — matching capability with opportunity.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-icon">📊</div>
+      <h4>Project Management</h4>
+      <p>Structuring complex initiatives with clarity, accountability, and cross-functional coordination.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-icon">📈</div>
+      <h4>Investing & Trading</h4>
+      <p>Systematic research and disciplined capital allocation across public markets and emerging opportunities.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-icon">🌐</div>
+      <h4>Intercultural Bridge</h4>
+      <p>Navigating cross-cultural complexity with nuance — from team dynamics to international market entry.</p>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="projects-header fade-up">
+    <div>
+      <div class="section-eyebrow">Current projects</div>
+      <h2>Where talent<br>is needed now</h2>
+    </div>
+    <p style="max-width: 260px; font-size: 0.83rem; font-weight: 300; color: var(--text2); line-height: 1.7;">Each project is actively seeking skilled collaborators. Find your fit and apply directly.</p>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-num">01</div>
+      <div class="project-status"><span class="status-dot"></span>Active · Early stage</div>
+      <h3>Global Talent Pipeline</h3>
+      <p>Building a curated network of emerging professionals across Canada, Europe, and Asia — connecting them with opportunities that match their trajectory, not just their résumé.</p>
+      <div class="project-tags">
+        <span class="tag">Recruitment</span>
+        <span class="tag">Network building</span>
+        <span class="tag">Multicultural</span>
+      </div>
+      <a href="mailto:simon.lunari@gmail.com?subject=Global Talent Pipeline — Application" class="project-link">Apply to collaborate →</a>
+    </div>
+
+    <div class="project-card fade-up">
+      <div class="project-num">02</div>
+      <div class="project-status"><span class="status-dot"></span>Active · Research phase</div>
+      <h3>Investment Scouting Initiative</h3>
+      <p>A research-led project identifying undervalued opportunities in public markets and early-stage ventures, with a focus on sectors undergoing structural transformation.</p>
+      <div class="project-tags">
+        <span class="tag">Finance</span>
+        <span class="tag">Research</span>
+        <span class="tag">Market analysis</span>
+      </div>
+      <a href="mailto:simon.lunari@gmail.com?subject=Investment Scouting — Application" class="project-link">Apply to collaborate →</a>
+    </div>
+
+    <div class="project-card fade-up">
+      <div class="project-num">03</div>
+      <div class="project-status"><span class="status-dot"></span>Active · Building team</div>
+      <h3>Intercultural Bridge Program</h3>
+      <p>A consulting initiative helping organizations navigate cross-cultural complexity — from team dynamics to market entry — with nuance, strategy, and lived experience.</p>
+      <div class="project-tags">
+        <span class="tag">Consulting</span>
+        <span class="tag">Cross-cultural</span>
+        <span class="tag">Strategy</span>
+      </div>
+      <a href="mailto:simon.lunari@gmail.com?subject=Intercultural Bridge — Application" class="project-link">Apply to collaborate →</a>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="fade-up">
+    <div class="section-eyebrow" style="justify-content: center;">Process</div>
+    <h2>Simple. Direct. Effective.</h2>
+  </div>
+  <div class="how-steps">
+    <div class="step fade-up">
+      <div class="step-num">STEP 01</div>
+      <h4>Explore projects</h4>
+      <p>Browse the active projects. Read each scope, the current team stage, and what skills are needed.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">STEP 02</div>
+      <h4>Find your fit</h4>
+      <p>Ask yourself honestly: what do I bring? What's my relevant experience, and what can I contribute?</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">STEP 03</div>
+      <h4>Reach out</h4>
+      <p>Send a direct email. Share your background, the project that interests you, and your contribution.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">STEP 04</div>
+      <h4>Connect</h4>
+      <p>If there's a genuine fit, we'll have a direct conversation. No drawn-out process — just honest dialogue.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left fade-up">
+    <div class="section-eyebrow">Contact</div>
+    <h2>Let's find<br>the right fit</h2>
+    <p>Whether you're an emerging expert looking for a meaningful project, or a project that needs the right people — I'd like to hear from you.</p>
+    <p>I read every message personally and respond to those where I see genuine potential for collaboration.</p>
+    <a href="mailto:simon.lunari@gmail.com" class="contact-email">simon.lunari@gmail.com →</a>
+  </div>
+
+  <div class="contact-form fade-up">
+    <form action="mailto:simon.lunari@gmail.com" method="post" enctype="text/plain">
+      <div class="form-field">
+        <label>Your name</label>
+        <input type="text" name="name" placeholder="Full name" required>
+      </div>
+      <div class="form-field">
+        <label>Email address</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-field">
+        <label>Project of interest</label>
+        <select name="project">
+          <option value="">Select a project</option>
+          <option>Global Talent Pipeline</option>
+          <option>Investment Scouting Initiative</option>
+          <option>Intercultural Bridge Program</option>
+          <option>General inquiry</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Your message</label>
+        <textarea name="message" placeholder="Tell me about yourself and what you'd bring to this project..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span class="nav-dot"></span>Simone Lunari</div>
+  <span>© 2026 · Talent Catalyst · Vancouver, BC</span>
+  <span>lunariprojects.com</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
